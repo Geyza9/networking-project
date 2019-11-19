@@ -1,4 +1,4 @@
-package networking;
+package server;
 
 public class main {
 }
