@@ -7,11 +7,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-/**
- * This class implements java socket client
- * @author pankaj
- *
- */
 public class ChatClientTest {
 
     public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
@@ -22,7 +17,7 @@ public class ChatClientTest {
         ObjectInputStream ois = null;
         for(int i=0; i<5;i++){
             //establish socket connection to server
-            socket = new Socket(host.getHostName(), 9876);
+            socket = new Socket(host.getHostName(), 64209);
             //write to socket using ObjectOutputStream
             oos = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("Sending request to Socket Server");
