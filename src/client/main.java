@@ -1,5 +1,7 @@
 package client;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.*;
@@ -60,6 +62,18 @@ public class main {
         frame.getContentPane().add(BorderLayout.SOUTH, chat);
         frame.getContentPane().add(BorderLayout.NORTH, clientChat);
         frame.setVisible(true);
+
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!text.getText().isEmpty()){
+                    messages.add(new Message(text.getText(),0));
+                }
+                for (int i = 0; i < messages.size() ; i++) {
+                    System.out.println(messages.get(i).getMessage());
+                }
+            }
+        });
 
 
         System.out.println(Integer.toString(users.size()));

@@ -13,12 +13,12 @@ public class Message {
     }
 
     //receive a message:
-    public Message(String message, int id){
+    public Message(String msg, int id){
+        message = msg;
 
     }
 
-
-
-
-
+    public String getMessage() {
+        return message;
+    }
 }
