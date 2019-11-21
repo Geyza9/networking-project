@@ -17,7 +17,7 @@ public class main {
     static ArrayList<User> users = new ArrayList<>();
 
     //NETWORK STUFF
-    final static int ServerPort = 64209;
+    final static int ServerPort = 6666;
     static byte[] ipa = new byte[4];
     //END
 
@@ -45,10 +45,9 @@ public class main {
         Scanner input = new Scanner(System.in);
 
         //NETWORK STUFF
-        ipa[0] = (byte)192; ipa[1] = (byte)168; ipa[2] = (byte)43; ipa[3] = (byte)186;
-        InetAddress ip = InetAddress.getByName("localhost");
-        //InetAddress ip = InetAddress.getByAddress(ipa);
-        Socket socket = new Socket(ip, 6666);
+        ipa[0] = (byte)192; ipa[1] = (byte)168; ipa[2] = (byte)43; ipa[3] = (byte)205;
+        InetAddress ip = InetAddress.getByAddress(ipa);
+        Socket socket = new Socket("192.168.43.205", 6666);
 
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());
         DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());

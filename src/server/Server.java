@@ -11,7 +11,6 @@ public class Server implements Runnable {
     static Server instance = null;
 
 
-
     @Override
     public void run() {
         if(instance == null) {
