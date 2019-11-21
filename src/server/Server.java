@@ -20,7 +20,6 @@ public class Server implements Runnable {
             return;
         }
          clientList = new Vector<>();
-        int clientCounter = 0;
 
         try {
             ServerSocket serverSocket = new ServerSocket(port);
@@ -34,7 +33,6 @@ public class Server implements Runnable {
                 Thread thread = new Thread(handler);
                 clientList.add(handler);
                 thread.start();
-                clientCounter++;
             }
             System.out.println("Server closed");
             serverSocket.close();
