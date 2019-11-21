@@ -3,6 +3,7 @@ package client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -11,11 +12,11 @@ public class ChatClientTest {
 
     public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException{
         //get the localhost IP address, if server is running on some other IP, you need to use that
-        InetAddress host = InetAddress.getLocalHost();
+        Inet4Address host = new Inet4Address(
         Socket socket = null;
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
-        for(int i=0; i<5;i++){
+        for(int i = 0; i < 5; i++){
             //establish socket connection to server
             socket = new Socket(host.getHostName(), 64209);
             //write to socket using ObjectOutputStream
