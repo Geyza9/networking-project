@@ -20,11 +20,12 @@ public class main {
     final static int ServerPort = 6666;
     static DataInputStream dataInputStream;
     static DataOutputStream dataOutputStream;
+    static Socket socket;
     //END
 
     //NETWORK STUFF
     static void connect(String ip)throws UnknownHostException, IOException{
-        Socket socket = new Socket(ip, 6666);
+        socket = new Socket(ip, 6666);
 
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -96,7 +97,7 @@ public class main {
                         e.printStackTrace();
                     }} else {
                         try{
-                            dataOutputStream.writeUTF("/logout");
+                            socket.close();
                         } catch (IOException e){
                             e.printStackTrace();
                         }
