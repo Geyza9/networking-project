@@ -1,5 +1,7 @@
 package client;
 
+import com.sun.source.doctree.StartElementTree;
+
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,8 +18,17 @@ public class main {
 
     //NETWORK STUFF
     final static int ServerPort = 6666;
-    static byte[] ipa = new byte[4];
+    static DataInputStream dataInputStream;
+    static DataOutputStream dataOutputStream;
     //END
+
+    //NETWORK STUFF
+    static void connect(String ip)throws UnknownHostException, IOException{
+        Socket socket = new Socket(ip, 6666);
+
+        dataInputStream = new DataInputStream(socket.getInputStream());
+        dataOutputStream = new DataOutputStream(socket.getOutputStream());
+    }
 
 
     //MAIN
@@ -26,7 +37,27 @@ public class main {
         userName = "DudeBro69";
         messages = "Welcome to the chat!";
 
-        //GUI STUFF
+        //SETUP WINDOW
+        JFrame setupWindow = new JFrame("Setup");
+        setupWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setupWindow.setSize(350,150);
+        JTextField userNameInput = new JTextField(20);
+        JTextField ipAdressInput = new JTextField(20);
+        JButton connectButton = new JButton("Connect");
+        JLabel userNameLabel = new JLabel("Username:");
+        JLabel ipAdressLabel = new JLabel("IP adress:");
+        JPanel userNamePanel = new JPanel();
+        JPanel ipAdressPanel = new JPanel();
+        userNamePanel.add(userNameLabel, BorderLayout.WEST);
+        userNamePanel.add(userNameInput, BorderLayout.EAST);
+        ipAdressPanel.add(ipAdressLabel, BorderLayout.WEST);
+        ipAdressPanel.add(ipAdressInput, BorderLayout.EAST);
+        setupWindow.add(userNamePanel, BorderLayout.NORTH);
+        setupWindow.add(ipAdressPanel, BorderLayout.CENTER);
+        setupWindow.add(connectButton,BorderLayout.SOUTH);
+        setupWindow.setVisible(true);
+
+        //MAIN CHAT ELEMENTS
         JFrame frame = new JFrame("Chat");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 500);
@@ -43,20 +74,13 @@ public class main {
         messagesArea.setEditable(false);
         messagesArea.setCaretPosition(messagesArea.getDocument().getLength());
         messagesArea.setText(messages);
-
-        //scrollpane
         JScrollPane scrollPane = new JScrollPane(messagesArea);
 
         // added the components to the frame
         frame.getContentPane().add(BorderLayout.SOUTH, chat);
         frame.getContentPane().add(BorderLayout.CENTER, scrollPane);
-        frame.setVisible(true);
 
-        //NETWORK STUFF
-        Socket socket = new Socket("192.168.43.205", 6666);
 
-        DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-        DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 
         //THREADS
         //output thread
@@ -67,12 +91,12 @@ public class main {
                         String msg = userName + ": " + text.getText();
                         text.setText("");
                     try{
-                        outputStream.writeUTF(msg);
+                        dataOutputStream.writeUTF(msg);
                     } catch (IOException e){
                         e.printStackTrace();
                     }} else {
                         try{
-                            outputStream.writeUTF("/logout");
+                            dataOutputStream.writeUTF("/logout");
                         } catch (IOException e){
                             e.printStackTrace();
                         }
@@ -86,7 +110,7 @@ public class main {
             public void run() {
                 while (true){
                     try {
-                        String msg = inputStream.readUTF();
+                        String msg = dataInputStream.readUTF();
                         System.out.println(msg);
                         messages = messages+"\n"+msg;
                         messagesArea.setText(messages);
@@ -96,8 +120,6 @@ public class main {
                 }
             }
         });
-
-        messageIn.start();
 
 
         sendButton.addActionListener(new ActionListener() {
@@ -124,6 +146,23 @@ public class main {
             public void windowClosing(WindowEvent e) {
                 loggingOut = true;
                 messageOut.run();
+            }
+        });
+        connectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!userNameInput.getText().isEmpty()){
+                    if(!ipAdressInput.getText().isEmpty()){
+                        userName = userNameInput.getText();
+                        setupWindow.setVisible(false);
+                        frame.setVisible(true);
+                        try {
+                        connect(ipAdressInput.getText());
+                        messageIn.start();
+                    } catch (IOException ev){
+                            ev.printStackTrace();
+                        }}
+                }
             }
         });
     }
