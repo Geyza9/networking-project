@@ -46,8 +46,8 @@ public class main {
 
         //NETWORK STUFF
         //ipa[0] = (byte)172; ipa[1] = (byte)24; ipa[2] = (byte)214; ipa[3] = (byte)168;
-        //InetAddress ip = InetAddress.getByAddress(ipa);
-        Socket socket = new Socket("192.168.137.1", 6666);
+        InetAddress ip = InetAddress.getByName("localhost");
+        Socket socket = new Socket(ip, 6666);
 
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());
         DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
