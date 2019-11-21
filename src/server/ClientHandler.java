@@ -46,7 +46,7 @@ public class ClientHandler implements Runnable {
                     break; 
                 } 
 
-                Server.globalMessage(received);
+                Server.instance.globalMessage(received);
                 
             } catch (IOException e) { 
                   
