@@ -2,31 +2,27 @@ package server;
 import java.util.*;
 
 public class main {
-
     public static void main(String[] args) {
-        System.out.println("Starting server");
+        Scanner scanner = new Scanner(System.in);
         Server server = new Server();
         Thread thread = new Thread(server);
         thread.start();
-        Scanner scanner = new Scanner(System.in);
 
         while(true) {
-            String command = scanner.nextLine();
-
-            if (command.equals("stop")) {
-                System.out.println("Stopping server");
-                server.serverIsRunning = false;
-                break;
+            switch (scanner.nextLine().toLowerCase()){
+                case "start":
+                    System.out.println("Starting server");
+                    server.serverIsRunning = true;
+                    break;
+                case "stop":
+                    System.out.println("Stopping server");
+                    server.serverIsRunning = false;
+                    break;
+                case "exit":
+                    System.out.println("Program exit");
+                    System.exit(0);
+                    return;
             }
         }
-        System.out.println("Stopping program");
     }
-
-    void startServer() {
-
-    }
-    void stopServer() {
-
-    }
-
 }
