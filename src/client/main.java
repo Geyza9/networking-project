@@ -45,8 +45,9 @@ public class main {
         Scanner input = new Scanner(System.in);
 
         //NETWORK STUFF
-        //ipa[0] = (byte)172; ipa[1] = (byte)24; ipa[2] = (byte)214; ipa[3] = (byte)168;
+        ipa[0] = (byte)192; ipa[1] = (byte)168; ipa[2] = (byte)43; ipa[3] = (byte)186;
         InetAddress ip = InetAddress.getByName("localhost");
+        //InetAddress ip = InetAddress.getByAddress(ipa);
         Socket socket = new Socket(ip, 6666);
 
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());

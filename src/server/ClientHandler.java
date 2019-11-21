@@ -16,7 +16,7 @@ public class ClientHandler implements Runnable {
     boolean isloggedin;
 
     // constructor
-    public ClientHandler(Socket socket, String name, DataInputStream dataInputStream,
+    public ClientHandler(Socket socket,  DataInputStream dataInputStream,
             DataOutputStream dataOutputStream) {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
@@ -46,7 +46,7 @@ public class ClientHandler implements Runnable {
                     break; 
                 } 
 
-                Server.instance.globalMessage(received);
+                Server.instance.globalMessage(name + ": " + received);
                 
             } catch (IOException e) { 
                   
