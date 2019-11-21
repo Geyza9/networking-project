@@ -19,6 +19,7 @@ public class Server {
         //Look for Clients
         while (true)
         {
+            //Accept connecting clients
             socket = serverSocket.accept();
 
             System.out.println("A new client is trying to connect! " + socket);
@@ -26,7 +27,7 @@ public class Server {
             DataInputStream dataIn = new DataInputStream(socket.getInputStream());
             DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
 
-            System.out.println("Handeling Client...");
+            System.out.println("Handling Client...");
 
             ClientHandler handler = new ClientHandler(socket, "Client " + clientCounter, dataIn, dataOut);
 
@@ -39,6 +40,16 @@ public class Server {
             thread.start();
 
             clientCounter++;
+        }
+    }
+
+    public void globalMessage(String message) {
+        for (ClientHandler client : clientList) {
+            try{
+                client.dataOutputStream.writeUTF(client.getName() + message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
