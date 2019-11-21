@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - main",
+            "request": "launch",
+            "mainClass": "server.main",
+            "projectName": "networking-project_86c9b09f"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - main",
+            "request": "launch",
+            "mainClass": "client.main",
+            "projectName": "networking-project_86c9b09f"
+        }
+    ]
+}
