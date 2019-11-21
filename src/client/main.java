@@ -15,7 +15,7 @@ public class main {
     static String messages;
 
     //NETWORK STUFF
-    final static int ServerPort = 64209;
+    final static int ServerPort = 6666;
     static byte[] ipa = new byte[4];
     //END
 

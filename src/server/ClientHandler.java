@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 
 public class ClientHandler implements Runnable {
     Scanner scn = new Scanner(System.in);
-    private String name;
     final DataInputStream dataInputStream;
     final DataOutputStream dataOutputStream;
     Socket socket;
@@ -22,10 +21,6 @@ public class ClientHandler implements Runnable {
         this.dataOutputStream = dataOutputStream;
         this.socket = socket;
         this.isloggedin = true;
-    }
-
-    public String getName() {
-		return name;
     }
              
           
@@ -40,13 +35,13 @@ public class ClientHandler implements Runnable {
                   
                 System.out.println(received); 
                   
-                if(received.equals("/logout")){ 
+                if(received.toLowerCase().equals("/logout")){
                     this.isloggedin=false; 
                     this.socket.close(); 
                     break; 
                 } 
 
-                Server.instance.globalMessage(name + ": " + received);
+                Server.instance.globalMessage(received);
                 
             } catch (IOException e) { 
                   
