@@ -2,15 +2,24 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.net.*;
 
 
 public class main {
     static ArrayList<Message> messages = new ArrayList<>();
     static ArrayList<User> users = new ArrayList<>();
+
+    //NETWORK STUFF
+    final static int ServerPort = 64209;
+    static byte[] ipa = new byte[4];
+    //END
 
     //FUNCTIONS
     private static void sendMessage(String message){
@@ -32,12 +41,52 @@ public class main {
 
 
     //MAIN
-    public static void main(String[] args){
+    public static void main(String[] args) throws  UnknownHostException, IOException{
         Scanner input = new Scanner(System.in);
-        boolean connected;
 
-        //try to connect
-        //run this if connection is established
+        //NETWORK STUFF
+        //ipa[0] = (byte)172; ipa[1] = (byte)24; ipa[2] = (byte)214; ipa[3] = (byte)168;
+        InetAddress ip = InetAddress.getByName("localhost");
+        Socket socket = new Socket(ip, 6666);
+
+        DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+        DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+
+        //THREADS
+        //output thread
+        Thread messageOut = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    String msg = input.nextLine();
+
+                    try{
+                        outputStream.writeUTF(msg);
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        Thread messageIn = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        String msg = inputStream.readUTF();
+                        System.out.println(msg);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        messageIn.start();
+        messageOut.start();
+
+        /*boolean connected;
         connected = true;
         //add users to list based on server
         if(connected){
@@ -68,6 +117,7 @@ public class main {
             public void actionPerformed(ActionEvent e) {
                 if(!text.getText().isEmpty()){
                     messages.add(new Message(text.getText(),0));
+                    text.setText("");
                 }
                 for (int i = 0; i < messages.size() ; i++) {
                     System.out.println(messages.get(i).getMessage());
@@ -75,10 +125,23 @@ public class main {
             }
         });
 
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!text.getText().isEmpty()){
+                    messages.add(new Message(text.getText(),0));
+                    text.setText("");
+                }
+                for (int i = 0; i < messages.size() ; i++) {
+                    System.out.println(messages.get(i).getMessage());
+                }
+            }
+        };
+
+        text.addActionListener(action);
 
         System.out.println(Integer.toString(users.size()));
-
-
+*/
 
 
     }

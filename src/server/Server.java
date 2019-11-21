@@ -4,48 +4,47 @@ import java.io.*;
 import java.util.*;
 import java.net.*;
 
-//Server
-public class Server {
+public class Server implements Runnable {
+    private Vector<ClientHandler> clientList;
+    private int port = 6666;
+    boolean serverIsRunning = true;
+    static Server instance = null;
 
-    //Storage for Clients
-    static Vector<ClientHandler> clientList = new Vector<>();
 
-    static int clientCounter = 0;
 
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(64209);
+    @Override
+    public void run() {
+        if(instance == null) {
+            instance = this;
+        } else {
+            return;
+        }
+         clientList = new Vector<>();
+        int clientCounter = 0;
 
-        Socket socket;
-        //Look for Clients
-        while (true)
-        {
-            //Accept connecting clients
-            socket = serverSocket.accept();
-
-            System.out.println("A new client is trying to connect! " + socket);
-
-            DataInputStream dataIn = new DataInputStream(socket.getInputStream());
-            DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
-
-            System.out.println("Handling Client...");
-
-            ClientHandler handler = new ClientHandler(socket, "Client " + clientCounter, dataIn, dataOut);
-
-            Thread thread = new Thread(handler);
-
-            System.out.println("Adding Client to Client list");
-
-            clientList.add(handler);
-
-            thread.start();
-
-            clientCounter++;
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            System.out.println("Server running and listening at: " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
+            while (serverIsRunning) {
+                Socket socket = serverSocket.accept();
+                DataInputStream dataIn = new DataInputStream(socket.getInputStream());
+                DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
+                ClientHandler handler = new ClientHandler(socket, "Client " + clientCounter, dataIn, dataOut);
+                Thread thread = new Thread(handler);
+                clientList.add(handler);
+                thread.start();
+                clientCounter++;
+            }
+            System.out.println("Server closed");
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void globalMessage(String message) {
+    void globalMessage(String message) {
         for (ClientHandler client : clientList) {
-            try{
+            try {
                 client.dataOutputStream.writeUTF(client.getName() + message);
             } catch (IOException e) {
                 e.printStackTrace();
