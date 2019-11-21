@@ -56,6 +56,7 @@ public class main {
         //ipa[0] = (byte)192; ipa[1] = (byte)168; ipa[2] = (byte)137; ipa[3] = (byte)1;
         //InetAddress ip = InetAddress.getByAddress(ipa);
         InetAddress ip = InetAddress.getByName("localhost");
+        //InetAddress ip = InetAddress.getByAddress(ipa);
         Socket socket = new Socket(ip, 6666);
 
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());

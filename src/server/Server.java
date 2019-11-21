@@ -27,9 +27,10 @@ public class Server implements Runnable {
             System.out.println("Server running and listening at: " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
             while (serverIsRunning) {
                 Socket socket = serverSocket.accept();
+                System.out.println("New Client connected");
                 DataInputStream dataIn = new DataInputStream(socket.getInputStream());
                 DataOutputStream dataOut = new DataOutputStream(socket.getOutputStream());
-                ClientHandler handler = new ClientHandler(socket, "Client " + clientCounter, dataIn, dataOut);
+                ClientHandler handler = new ClientHandler(socket, dataIn, dataOut);
                 Thread thread = new Thread(handler);
                 clientList.add(handler);
                 thread.start();
@@ -45,7 +46,7 @@ public class Server implements Runnable {
     void globalMessage(String message) {
         for (ClientHandler client : clientList) {
             try {
-                client.dataOutputStream.writeUTF(client.getName() + message);
+                client.dataOutputStream.writeUTF(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
