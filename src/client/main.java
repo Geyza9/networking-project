@@ -25,7 +25,7 @@ public class main {
 
     //NETWORK STUFF
     static void connect(String ip)throws UnknownHostException, IOException{
-        socket = new Socket(ip, 6666);
+        socket = new Socket(ip, ServerPort);
 
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -46,7 +46,7 @@ public class main {
         JTextField ipAdressInput = new JTextField(20);
         JButton connectButton = new JButton("Connect");
         JLabel userNameLabel = new JLabel("Username:");
-        JLabel ipAdressLabel = new JLabel("IP adress:");
+        JLabel ipAdressLabel = new JLabel("IP address:");
         JPanel userNamePanel = new JPanel();
         JPanel ipAdressPanel = new JPanel();
         userNamePanel.add(userNameLabel, BorderLayout.WEST);
