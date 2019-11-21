@@ -53,10 +53,9 @@ public class main {
         frame.setVisible(true);
 
         //NETWORK STUFF
-        //ipa[0] = (byte)192; ipa[1] = (byte)168; ipa[2] = (byte)137; ipa[3] = (byte)1;
-        //InetAddress ip = InetAddress.getByAddress(ipa);
-        InetAddress ip = InetAddress.getByName("localhost");
-        //InetAddress ip = InetAddress.getByAddress(ipa);
+        ipa[0] = (byte)192; ipa[1] = (byte)168; ipa[2] = (byte)43; ipa[3] = (byte)186; //INPUT IP4 ADDRESS HERE
+        InetAddress ip = InetAddress.getByAddress(ipa);
+        //InetAddress ip = InetAddress.getByName("localhost");
         Socket socket = new Socket(ip, 6666);
 
         DataInputStream inputStream = new DataInputStream(socket.getInputStream());
