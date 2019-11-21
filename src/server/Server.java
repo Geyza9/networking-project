@@ -10,7 +10,6 @@ public class Server {
     //Storage for Clients
     static Vector<ClientHandler> clientList = new Vector<>();
 
-
     static int clientCounter = 0;
 
     public static void main(String[] args) throws IOException {

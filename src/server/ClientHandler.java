@@ -47,7 +47,7 @@ public class ClientHandler implements Runnable
                 String MsgToSend = st.nextToken(); 
                 String recipient = st.nextToken(); 
   
-                for (ClientHandler mc : Server.ar)  
+                for (ClientHandler mc : Server.clientList)
                 { 
                     if (mc.name.equals(recipient) && mc.isloggedin==true)  
                     { 
