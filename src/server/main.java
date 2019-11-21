@@ -43,7 +43,7 @@ public class main {
                     System.exit(0);
                     return;                    
                 default:
-                    if (server != null && input.contains("say:")){
+                    if (server != null && input.toLowerCase().contains("say:")){
                         server.globalMessage("server: " + input.substring(4));
                     }else{
                         System.out.println("the following commands are available; 'start' to start the server, 'stop' to stop the server, 'exit' to exit the application, and 'say:' followed by a message to send the message as the server");
