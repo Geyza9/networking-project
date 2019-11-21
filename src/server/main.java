@@ -8,7 +8,8 @@ public class main {
         Thread thread = null;
 
         while(true) {
-            switch (scanner.nextLine().toLowerCase()){
+            String input = scanner.nextLine().toLowerCase();
+            switch (input){
                 case "start":
                     System.out.println("Starting server");
                     if (server == null){
@@ -24,18 +25,30 @@ public class main {
                     if (server == null){
                         System.out.println("Server not running");
                     } else {
+                        server.globalMessage("server: Stopping server");
                         server.serverIsRunning = false;
                         thread = null;
                         server = null;
                     }
                     break;
                 case "exit":
-                    server.serverIsRunning = false;
-                    server = null;
+                    if (server != null){
+                        server.globalMessage("server: Stopping server");
+                        server.serverIsRunning = false;
+                        thread = null;
+                        server = null;
+                    }
                     System.out.println("Program exit");
                     scanner.close();
                     System.exit(0);
-                    return;
+                    return;                    
+                default:
+                    if (server != null && input.contains("say:")){
+                        server.globalMessage("server: " + input.substring(4));
+                    }else{
+                        System.out.println("the following commands are available; 'start' to start the server, 'stop' to stop the server, 'exit' to exit the application, and 'say:' followed by a message to send the message as the server");
+                    }
+                break;
             }
         }
     }

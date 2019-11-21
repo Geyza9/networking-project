@@ -4,14 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
-
 public class ClientHandler implements Runnable {
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
     Socket socket;
 
-    // constructor
     public ClientHandler(Socket socket,  DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
         this.socket = socket;
         this.dataInputStream = dataInputStream;
@@ -25,18 +22,18 @@ public class ClientHandler implements Runnable {
             { 
                 Server.instance.globalMessage(dataInputStream.readUTF());
             } catch (IOException e) { 
-                e.printStackTrace();
+                Server.instance.globalMessage("Client disconnected");
+                Server.instance.clientList.remove(this);
                 break;
             } 
         } 
-        Server.instance.globalMessage("Client disconnected");
+        
         try
         { 
             this.dataInputStream.close(); 
             this.dataOutputStream.close(); 
             this.socket.close();
         }catch(IOException e){ 
-            e.printStackTrace();
         } 
     } 
 } 

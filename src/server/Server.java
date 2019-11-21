@@ -5,7 +5,7 @@ import java.util.*;
 import java.net.*;
 
 public class Server implements Runnable {
-    private Vector<ClientHandler> clientList;
+    public Vector<ClientHandler> clientList;
     private int port = 6666;
     boolean serverIsRunning = true;
     static Server instance = null;
@@ -36,16 +36,15 @@ public class Server implements Runnable {
             System.out.println("Server closed");
             serverSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     void globalMessage(String message) {
+        System.out.println(message);
         for (ClientHandler client : clientList) {
             try {
                 client.dataOutputStream.writeUTF(message);
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
