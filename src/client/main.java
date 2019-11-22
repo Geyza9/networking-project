@@ -3,7 +3,6 @@ package client;
 import com.sun.source.doctree.StartElementTree;
 
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
