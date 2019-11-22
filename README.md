@@ -20,8 +20,8 @@ One or more Clints connect to the server, but the server and client both have to
 7: The Server can stop running temporarily and disconnect all clients type in "stop" and hit enter. To completly stop the server type in "exit".
 
 # Known Issues and Fixes
-Issue: Machines running the Client and Server cannot connect over the AAU-1x and AAU-DAY-1 networks.
-Fix: If the Client and Server are both run on the same Machine, it should work. But use another network or a mobile network
+Issue: Machines running the Client and Server cannot connect over the AAU-1x and AAU-DAY-1 networks (and possibly other networks which operate the same way).
+Fix: If the Client and Server are both run on the same Machine, it should work. Otherwise, a different network has to be used.
 
 Issue: The program needs a Java runtime environment installed on the computer, and the path to this needs to be specified in the file "server.bat". If the path is incorrect here, the program will not work.
 Fix: In this case, "server.bat" needs to be opened in a text editor, and the path to Java needs to be corrected.
