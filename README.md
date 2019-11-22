@@ -6,11 +6,17 @@ One or more Clints connect to the server, but the server and client both have to
 
 # How to use
 1: The project comes in a .zip file, extract the folder and navigate to the Server folder.
+
 2: Run the "server.bat", this should open up a terminal.
+
 3: To start the server type in "start" and hit enter. The terminal should now display you IP adresse
+
 4: Now clients should be able to connect. Run "client.jar". And type in the server IP (EXCLUDE ":6666") and desired username.
+
 5: The server will confirm that a new user has connected. The client can now chat with other clients connected to the server.
+
 6: Clients can disconnect at any time by closing down their chat window. 
+
 7: The Server can stop running temporarily and disconnect all clients type in "stop" and hit enter. To completly stop the server type in "exit".
 
 # Known Issues and Fixes
