@@ -9,7 +9,7 @@ One or more Clints connect to the server, but the server and client both have to
 
 2: Run the "server.bat", this should open up a terminal.
 
-3: To start the server type in "start" and hit enter. The terminal should now display you IP adresse
+3: To start the server type in "start" and hit enter. The terminal should now display you IP adress.
 
 4: Now clients should be able to connect. Run "client.jar". And type in the server IP (EXCLUDE ":6666") and desired username.
 
@@ -22,3 +22,6 @@ One or more Clints connect to the server, but the server and client both have to
 # Known Issues and Fixes
 Issue: Machines running the Client and Server cannot connect over the AAU-1x and AAU-DAY-1 networks.
 Fix: If the Client and Server are both run on the same Machine, it should work. But use another network or a mobile network
+
+Issue: The program needs a Java runtime environment installed on the computer, and the path to this needs to be specified in the file "server.bat". If the path is incorrect here, the program will not work.
+Fix: In this case, "server.bat" needs to be opened in a text editor, and the path to Java needs to be corrected.
