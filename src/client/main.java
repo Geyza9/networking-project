@@ -1,7 +1,5 @@
 package client;
 
-import com.sun.source.doctree.StartElementTree;
-
 import java.awt.event.*;
 import java.util.Scanner;
 import javax.swing.*;
@@ -37,7 +35,7 @@ public class main {
         userName = "DudeBro69";
         messages = "Welcome to the chat!";
 
-        //SETUP WINDOW
+        //SETUP WINDOW ELEMENTS
         JFrame setupWindow = new JFrame("Setup");
         setupWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setupWindow.setSize(350,150);
@@ -48,10 +46,13 @@ public class main {
         JLabel ipAdressLabel = new JLabel("IP address:");
         JPanel userNamePanel = new JPanel();
         JPanel ipAdressPanel = new JPanel();
+        // SETUP WINDOW - USER NAME
         userNamePanel.add(userNameLabel, BorderLayout.WEST);
         userNamePanel.add(userNameInput, BorderLayout.EAST);
+        // SETUP WINDOW - IP ADDRESS
         ipAdressPanel.add(ipAdressLabel, BorderLayout.WEST);
         ipAdressPanel.add(ipAdressInput, BorderLayout.EAST);
+        // SETUP WINDOW - ADDS GUI COMPONENTS TO FRAME
         setupWindow.add(userNamePanel, BorderLayout.NORTH);
         setupWindow.add(ipAdressPanel, BorderLayout.CENTER);
         setupWindow.add(connectButton,BorderLayout.SOUTH);
@@ -62,21 +63,21 @@ public class main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 500);
 
-        // bottom panel with a text field to chat in
+        // MAIN CHAT - TEXT FIELD BOTTOM PANEL
         JPanel chat = new JPanel();
         JTextField text = new JTextField(25);
         JButton sendButton = new JButton("Send");
         chat.add(text);
         chat.add(sendButton);
 
-        // where the messages received will be shown
+        // MAIN CHAT - TEXT AREA + SCROLL PANE
         JTextArea messagesArea = new JTextArea();
         messagesArea.setEditable(false);
         messagesArea.setCaretPosition(messagesArea.getDocument().getLength());
         messagesArea.setText(messages);
         JScrollPane scrollPane = new JScrollPane(messagesArea);
 
-        // added the components to the frame
+        // MAIN CHAT - ADDS GUI COMPONENTS TO FRAME
         frame.getContentPane().add(BorderLayout.SOUTH, chat);
         frame.getContentPane().add(BorderLayout.CENTER, scrollPane);
 
@@ -105,6 +106,7 @@ public class main {
             }
         });
 
+        // MESSAGE IN THREAD - UPDATES THE MESSAGES STRING AND INSERTS MESSAGE STRING INTO TEXT AREA
         Thread messageIn = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -121,7 +123,7 @@ public class main {
             }
         });
 
-
+        // SEND BUTTON ACTION LISTENER TO SEND MESSAGES
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,6 +133,7 @@ public class main {
             }
         });
 
+        // ACTION LISTENER ON "ENTER" KEYBOARD INPUT
         Action action = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -139,8 +142,10 @@ public class main {
                 }
             }
         };
+        // ADDING THE ACTION LISTENER TO THE TEXT FIELD
         text.addActionListener(action);
 
+        // WINDOW LISTENER TO LOG OUT IF WINDOW IS SHUT DOWN
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -148,6 +153,7 @@ public class main {
                 messageOut.run();
             }
         });
+        // CHECKS IF INPUT IN THE TWO TEXT FIELDS AND MAKES LOG IN SCREEN INVISIBLE AND CHAT SCREEN VISIBLE
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

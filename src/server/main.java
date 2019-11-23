@@ -7,9 +7,11 @@ public class main {
         Server server = null;
         Thread thread = null;
 
+        // SERVER COMMANDS
         while(true) {
             String input = scanner.nextLine().toLowerCase();
             switch (input){
+                // START SERVER COMMAND
                 case "start":
                     System.out.println("Starting server");
                     if (server == null){
@@ -20,6 +22,7 @@ public class main {
                         System.out.println("Server already running");
                     }
                     break;
+                    // STOP SERVER COMMAND
                 case "stop":
                     System.out.println("Stopping server");
                     if (server == null){
@@ -31,6 +34,7 @@ public class main {
                         server = null;
                     }
                     break;
+                    // EXIT SERVER COMMAND
                 case "exit":
                     if (server != null){
                         server.globalMessage("server: Stopping server");
@@ -43,6 +47,7 @@ public class main {
                     System.exit(0);
                     return;                    
                 default:
+                    // SERVER SAY COMMAND
                     if (server != null && input.toLowerCase().contains("say:")){
                         server.globalMessage("server: " + input.substring(4));
                     }else{
