@@ -106,7 +106,7 @@ public class main {
             }
         });
 
-        // MESSAGE IN THREAD - UPDATES THE MESSAGES STRING AND INSERTS MESSAGE STRING INTO TEXT AREA
+        // NEW MESSAGE THREAD - UPDATES THE MESSAGES STRING AND INSERTS MESSAGE STRING INTO TEXT AREA
         Thread messageIn = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -153,7 +153,7 @@ public class main {
                 messageOut.run();
             }
         });
-        // CHECKS IF INPUT IN THE TWO TEXT FIELDS AND MAKES LOG IN SCREEN INVISIBLE AND CHAT SCREEN VISIBLE
+        // CHECKS IF THERE IS INPUT IN THE TWO TEXT FIELDS, MAKES LOG IN SCREEN INVISIBLE AND CHAT SCREEN VISIBLE IF TRUE
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
