@@ -9,21 +9,22 @@ public class ClientHandler implements Runnable {
     DataOutputStream dataOutputStream;
     Socket socket;
 
-    // CLIENT HANDLER - TAKES INPUT AND OUTPUT STREAM
+    // CLIENT HANDLER - HANDLES INPUT AND OUTPUT STREAMS
     public ClientHandler(Socket socket,  DataInputStream dataInputStream, DataOutputStream dataOutputStream) {
         this.socket = socket;
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
     }
-    // CLIENT DISCONNECTING
-    public void run() { 
+
+    public void run() {
+        // LISTEN FOR CLIENT INPUT STREAM AND OUTPUTS TO ALL CLIENTS
         while (true)  
         {
             try
-            // GLOBAL CLIENT DISCONNECTED MESSAGE AND REMOVED FROM CLIENT LIST
             {
                 Server.instance.globalMessage(dataInputStream.readUTF());
-            } catch (IOException e) { 
+            } catch (IOException e) {
+                // IF THIS FAILS, REMOVE THIS CLIENT HANDLER FROM THE SERVER CLIENT LIST
                 Server.instance.globalMessage("Client disconnected");
                 Server.instance.clientList.remove(this);
                 break;
@@ -31,10 +32,10 @@ public class ClientHandler implements Runnable {
         } 
         
         try
-        // CLOSE SOCKET AND THE CLIENTS DATA INPUT- AND OUTPUT- STREAM
+        // WHEN CLIENT HANDLER IS REMOVED CLOSE DATA STREAMS
         {
-            this.dataInputStream.close(); 
-            this.dataOutputStream.close(); 
+            this.dataInputStream.close();
+            this.dataOutputStream.close();
             this.socket.close();
         }catch(IOException e){ 
         } 

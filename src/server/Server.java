@@ -13,6 +13,7 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
+        // SINGLETON SETUP
         if(instance == null) {
             instance = this;
         } else {
@@ -21,10 +22,12 @@ public class Server implements Runnable {
          clientList = new Vector<>();
 
         try {
-            // SERVER RUNNING MESSAGE IN CONSOLE - GIVES THE IP THAT CLIENT NEEDS TO INSERT IN LOGIN SCREEN
+            // SERVER SOCKET SETUP USING THE SPECIFIED PORT
             ServerSocket serverSocket = new ServerSocket(port);
+            // PRINT SERVER IP IN TERMINAL
             System.out.println("Server running and listening at: " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
-            // CLIENT CONNECTED TO SOCKET AND ADDED TO CLIENT LIST
+            // CONTINUOUSLY LISTEN FOR NEW CONNECTION REQUESTS AND ACCEPT THEM
+            // INSTANTIATES A NEW THREAD TO HANDLE THE CLIENTS INCOMING AND OUTGOING MESSAGES
             while (serverIsRunning) {
                 Socket socket = serverSocket.accept();
                 System.out.println("New Client connected");
@@ -35,14 +38,14 @@ public class Server implements Runnable {
                 clientList.add(handler);
                 thread.start();
             }
-            // SERVER CLOSING SOCKETS
+            // CLOSE SERVER SOCKET IF THE SERVER IS NO LONGER RUNNING
             System.out.println("Server closed");
             serverSocket.close();
         } catch (IOException e) {
         }
     }
 
-    // MESSAGES SENT
+    // METHOD CALLED BY CLIENTHANDLER TO DISTRIBUTE A CLIENTS MESSAGE TO ALL OTHER CLIENTS
     void globalMessage(String message) {
         System.out.println(message);
         for (ClientHandler client : clientList) {

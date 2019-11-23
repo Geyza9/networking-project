@@ -7,13 +7,14 @@ public class main {
         Server server = null;
         Thread thread = null;
 
-        // SERVER COMMANDS
+        // SERVER LOOKS FOR INPUT INTO THE TERMINAL
         while(true) {
             String input = scanner.nextLine().toLowerCase();
             switch (input){
-                // START SERVER COMMAND
+                // START THE SERVER
                 case "start":
                     System.out.println("Starting server");
+                    //CHECKS IF YOU ARE ALREADY RUNNING A SERVER
                     if (server == null){
                         server = new Server();
                         thread = new Thread(server);
@@ -22,19 +23,21 @@ public class main {
                         System.out.println("Server already running");
                     }
                     break;
-                    // STOP SERVER COMMAND
+                // STOP THE SERVER
                 case "stop":
                     System.out.println("Stopping server");
+                    // IF THERE IS NO SERVER RUNNING, DO NOTHING
                     if (server == null){
                         System.out.println("Server not running");
                     } else {
+                        //IF IT IS RUNNING, STOP THE SERVER
                         server.globalMessage("server: Stopping server");
                         server.serverIsRunning = false;
                         thread = null;
                         server = null;
                     }
                     break;
-                    // EXIT SERVER COMMAND
+                // CLOSE THE SERVER AND EXIT PROGRAM
                 case "exit":
                     if (server != null){
                         server.globalMessage("server: Stopping server");
@@ -45,12 +48,12 @@ public class main {
                     System.out.println("Program exit");
                     scanner.close();
                     System.exit(0);
-                    return;                    
+                    return;
+                // SEND MESSAGES FROM THE SERVER TO CLIENTS
                 default:
-                    // SERVER SAY COMMAND
                     if (server != null && input.toLowerCase().contains("say:")){
                         server.globalMessage("server: " + input.substring(4));
-                    }else{
+                    }else{ //IF THE SERVER IS NOT RUNNING, TELL THE USER THE DIFFERENT SERVER COMMANDS
                         System.out.println("the following commands are available; 'start' to start the server, 'stop' to stop the server, 'exit' to exit the application, and 'say:' followed by a message to send the message as the server");
                     }
                 break;
