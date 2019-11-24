@@ -7,20 +7,19 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 
+//CLIENT PROGRAM FOR THE CHAT
 
 public class main {
-    static boolean loggingOut;
-    static String userName;
-    static String messages;
+    static boolean loggingOut; //is true when the user wants to close the client. When true, the connection to the server will be closed.
+    static String userName; //the name of the user of the client
+    static String messages; //this contains all the messages
 
-    //NETWORK STUFF
-    final static int ServerPort = 6666;
-    static DataInputStream dataInputStream;
-    static DataOutputStream dataOutputStream;
+    final static int ServerPort = 6666; //port to be used when connecting
+    static DataInputStream dataInputStream; //data in
+    static DataOutputStream dataOutputStream; //data out
     static Socket socket;
-    //END
 
-    //NETWORK STUFF
+    //method for connecting to the server
     static void connect(String ip)throws UnknownHostException, IOException{
         socket = new Socket(ip, ServerPort);
 
@@ -31,8 +30,8 @@ public class main {
 
     //MAIN
     public static void main(String[] args) throws  UnknownHostException, IOException{
-        Scanner input = new Scanner(System.in);
-        userName = "DudeBro69";
+        Scanner input = new Scanner(System.in); 
+        userName = "Default";
         messages = "Welcome to the chat!";
 
         //SETUP WINDOW ELEMENTS
@@ -84,7 +83,7 @@ public class main {
 
 
         //THREADS
-        //output thread
+        //thread for data sent to server. Sends username + the message. If loggingOut is true, it will close the socket to disconnect.
         Thread messageOut = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,7 +105,7 @@ public class main {
             }
         });
 
-        // NEW MESSAGE THREAD - UPDATES THE MESSAGES STRING AND INSERTS MESSAGE STRING INTO TEXT AREA
+        //thread for data received from server. Messages received will be added to the String called messages, which is than displayed on the GUI
         Thread messageIn = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -153,7 +152,7 @@ public class main {
                 messageOut.run();
             }
         });
-        // CHECKS IF THERE IS INPUT IN THE TWO TEXT FIELDS, MAKES LOG IN SCREEN INVISIBLE AND CHAT SCREEN VISIBLE IF TRUE
+        // ACTION LISTENER FOR THE CONNECT BUTTON IN THE SETUP WINDOW. Also checks if the input text fields have anything written in them, and only than does it try to connect
         connectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
